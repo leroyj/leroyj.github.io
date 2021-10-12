@@ -52,7 +52,7 @@
 Oct 12, 2021
 </div>
 <div><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentcolor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="icon icon-clock"><title>clock</title><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg>
-3 min read
+4 min read
 </div>
 <div><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentcolor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="icon icon-tag"><title>tag</title><path d="M20.59 13.41l-7.17 7.17a2 2 0 01-2.83.0L2 12V2h10l8.59 8.59a2 2 0 010 2.82z"/><line x1="7" y1="7" x2="7.01" y2="7"/></svg>
 <a class=tag href=https://leroyj.github.io/fr/tags/howto/>Howto</a>
@@ -98,7 +98,45 @@ Par chance, cette tâche peut être automatisée avec <strong>GitHub Actions</st
 <p>J&rsquo;ai choisi GitHub Page comme solution d&rsquo;hébergement. C&rsquo;est aussi simple qu&rsquo;un simple copier du contenu généré par Hugo (habituellement le contenu du dossier <code>public</code>) et d&rsquo;un coller dans votre repo <code>&lt;nickname>.github.io</code>.
 Pour automatiser la tâche, vous pouvez utiliser un repo pour la source du contenu de votre blog et d&rsquo;utiliser <strong>Github Actions</strong> pour automatiser le déploiement en utilisant ce <a href=https://ruddra.com/hugo-deploy-static-page-using-github-actions/>tutoriel d&rsquo;intégration de Hugo dans GitHub</a>.
 Voici comment.</p>
-<h2 id=support-de-google-analytics-1>Support de Google Analytics <sup id=fnref:1><a href=#fn:1 class=footnote-ref role=doc-noteref>1</a></sup></h2>
+<div class=highlight><div style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4>
+<table style=border-spacing:0;padding:0;margin:0;border:0;width:auto;overflow:auto;display:block><tr><td style=vertical-align:top;padding:0;margin:0;border:0>
+<pre tabindex=0 style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">24
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">25
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">26
+</span><span style=display:block;width:100%;background-color:#3c3d38><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">27
+</span></span><span style=display:block;width:100%;background-color:#3c3d38><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">28
+</span></span><span style=display:block;width:100%;background-color:#3c3d38><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">29
+</span></span><span style=display:block;width:100%;background-color:#3c3d38><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">30
+</span></span><span style=display:block;width:100%;background-color:#3c3d38><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">31
+</span></span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">32
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">33
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">34
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">35
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">36
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">37
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">38
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">39
+</span></code></pre></td>
+<td style=vertical-align:top;padding:0;margin:0;border:0;width:100%>
+<pre tabindex=0 style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-yaml data-lang=yaml>      - <span style=color:#f92672>name</span>: <span style=color:#ae81ff>Build</span>
+        <span style=color:#f92672>run</span>: <span style=color:#ae81ff>hugo --minify</span>
+
+<span style=display:block;width:100%;background-color:#3c3d38>      - <span style=color:#f92672>name</span>: <span style=color:#ae81ff>copy 404 from en language to root</span>
+</span><span style=display:block;width:100%;background-color:#3c3d38>        <span style=color:#f92672>uses</span>: <span style=color:#ae81ff>canastro/copy-file-action@master</span>
+</span><span style=display:block;width:100%;background-color:#3c3d38>        <span style=color:#f92672>with</span>:
+</span><span style=display:block;width:100%;background-color:#3c3d38>          <span style=color:#f92672>source</span>: <span style=color:#e6db74>&#34;./public/en/404.html&#34;</span>
+</span><span style=display:block;width:100%;background-color:#3c3d38>          <span style=color:#f92672>target</span>: <span style=color:#e6db74>&#34;./public/404.html&#34;</span>
+</span>
+      - <span style=color:#f92672>name</span>: <span style=color:#ae81ff>Deploy</span>
+        <span style=color:#f92672>uses</span>: <span style=color:#ae81ff>peaceiris/actions-gh-pages@v3</span>
+        <span style=color:#f92672>if</span>: <span style=color:#ae81ff>github.ref == &#39;refs/heads/main&#39;</span>
+        <span style=color:#f92672>with</span>:
+          <span style=color:#f92672>deploy_key</span>: <span style=color:#ae81ff>${{ secrets.ACTIONS_DEPLOY_KEY }}</span>
+          <span style=color:#f92672>external_repository</span>: <span style=color:#ae81ff>leroyj/leroyj.github.io</span>
+          <span style=color:#f92672>publish_dir</span>: <span style=color:#ae81ff>./public</span>
+</code></pre></td></tr></table>
+</div>
+</div><h2 id=support-de-google-analytics-1>Support de Google Analytics <sup id=fnref:1><a href=#fn:1 class=footnote-ref role=doc-noteref>1</a></sup></h2>
 <p>Pour suivre ma toute petite audience, j&rsquo;utilise Google Analytics comme c&rsquo;est l&rsquo;outil que je connais le mieux et qu&rsquo;on peut le mettre en oeuvre gratuitement.
 La configuration est directe. Il vous suffit d&rsquo;ajouter <code>googleAnalytics = 'G-YOURGAID'</code> au fichier de configuration <code>config.toml</code>.</p>
 <h2 id=reste-à-faire>Reste à faire</h2>
