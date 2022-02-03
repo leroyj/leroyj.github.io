@@ -7,7 +7,7 @@
 <meta name=viewport content="width=device-width,initial-scale=1">
 <meta name=author content="Julien Leroy">
 <meta name=description content="Deal with 5GB csv file easily with ripgrep and xsv - Command line still make sense for data stuff">
-<link rel=stylesheet href=https://leroyj.github.io/css/main.min.59cc678e5be3e25ab7368d36560b79af9a267f36ee8a396fc27a166261791ebd.css>
+<link rel=stylesheet href=https://leroyj.github.io/css/main.min.977e08cd600c7ab7518ca2f112b700c4494f2ce53dac7205e920d78dda1844ad.css>
 <script async src="https://www.googletagmanager.com/gtag/js?id=G-4K18JZ28X6"></script>
 <script>var dnt=navigator.doNotTrack||window.doNotTrack||navigator.msDoNotTrack,doNotTrack=dnt=="1"||dnt=="yes";if(!doNotTrack){window.dataLayer=window.dataLayer||[];function gtag(){dataLayer.push(arguments)}gtag('js',new Date),gtag('config','G-4K18JZ28X6',{anonymize_ip:!0})}</script>
 <meta name=twitter:card content="summary">
@@ -63,6 +63,7 @@ Feb 2, 2022
 <div class=post-content>
 <p><em>How to deal with a 5GB file to extract simple information?
 CLI is here to save your day!</em></p>
+<p><img src=/file-not-loaded-completely.png alt=Ouch!></p>
 <h2 id=yes-the-command-line-is-still-alive>Yes, the command line is still alive</h2>
 <p>Not only the Command Line Interface (CLI) is still a thing today on the ops side but we can even see a kind of renaissance.</p>
 <h3 id=automation>Automation</h3>
@@ -109,7 +110,9 @@ time <span style=color:#f92672>(</span><span style=color:#ae81ff>\
 </span><span style=color:#ae81ff></span>| xsv search -s etatAdministratifEtablissement <span style=color:#e6db74>&#39;A&#39;</span> <span style=color:#ae81ff>\
 </span><span style=color:#ae81ff></span>| xsv <span style=color:#66d9ef>select</span> siren,siret,enseigne1Etablissement,typeVoieEtablissement,libelleVoieEtablissement,libelleCommuneEtablissement <span style=color:#ae81ff>\
 </span><span style=color:#ae81ff></span>| xsv table <span style=color:#f92672>)</span>
-</code></pre></div><p><a href=https://asciinema.org/a/cyNEJbjD7qWv2cW93ma3dp4FH><img src=https://asciinema.org/a/cyNEJbjD7qWv2cW93ma3dp4FH.svg alt=asciicast></a></p>
+</code></pre></div><p>
+<asciinema-player src=/cast/466256.cast cols=640 rows=29 preload=1 start-at=0 speed=2 idle-time-limit=0.5 poster=#ZgotmplZ font-size=small></asciinema-player>
+</p>
 <p>Command line still make sense for data stuff.
 Try this with your favorite Graphical Interface app :P</p>
 </div>
@@ -123,5 +126,6 @@ Try this with your favorite Graphical Interface app :P</p>
 </div>
 </article>
 </main>
+<script src=https://leroyj.github.io/script/asciinema-player.js></script>
 </body>
 </html>
