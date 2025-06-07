@@ -1,130 +1,33 @@
-<!doctype html><html lang=en-us>
-<head>
-<title>📊 Essayez de faire ça avec Excel :) // Mon Blog Tech (FR)</title>
-<link rel="shortcut icon" href=/favicon.ico>
-<meta charset=utf-8>
-<meta name=generator content="Hugo 0.92.1">
-<meta name=viewport content="width=device-width,initial-scale=1">
-<meta name=author content="Julien Leroy">
-<meta name=description content="Gérer un fichier csv de 5Go avec ripgrep et xsv - La ligne de commande est toujours pertinent pour la data">
-<link rel=stylesheet href=https://leroyj.github.io/css/main.min.977e08cd600c7ab7518ca2f112b700c4494f2ce53dac7205e920d78dda1844ad.css>
-<script async src="https://www.googletagmanager.com/gtag/js?id=G-4K18JZ28X6"></script>
-<script>var dnt=navigator.doNotTrack||window.doNotTrack||navigator.msDoNotTrack,doNotTrack=dnt=="1"||dnt=="yes";if(!doNotTrack){window.dataLayer=window.dataLayer||[];function gtag(){dataLayer.push(arguments)}gtag('js',new Date),gtag('config','G-4K18JZ28X6',{anonymize_ip:!0})}</script>
-<meta name=twitter:card content="summary">
-<meta name=twitter:title content="📊 Essayez de faire ça avec Excel :)">
-<meta name=twitter:description content="Gérer un fichier csv de 5Go avec ripgrep et xsv - La ligne de commande est toujours pertinent pour la data">
-<meta property="og:title" content="📊 Essayez de faire ça avec Excel :)">
-<meta property="og:description" content="Gérer un fichier csv de 5Go avec ripgrep et xsv - La ligne de commande est toujours pertinent pour la data">
-<meta property="og:type" content="article">
-<meta property="og:url" content="https://leroyj.github.io/fr/posts/xsv/"><meta property="article:section" content="posts">
-<meta property="article:published_time" content="2022-02-02T22:59:43+01:00">
-<meta property="article:modified_time" content="2022-02-02T22:59:43+01:00"><meta property="og:site_name" content="Mon Blog Tech (FR)">
-</head>
-<body>
-<header class=app-header>
-<a href=https://leroyj.github.io/><img class=app-header-avatar src=/avatar.jpg alt="Julien Leroy"></a>
-<h2>Mon Blog Tech (FR)</h2>
-<nav class=app-header-menu>
-<a class=app-header-menu-item href=/fr>Accueil</a>
+<!doctype html><html lang=fr><head><title>📊 Essayez de faire ça avec Excel :) // Mon Blog Tech (FR)</title><link rel="shortcut icon" href=/favicon.ico><meta charset=utf-8><meta name=generator content="Hugo 0.147.7"><meta name=viewport content="width=device-width,initial-scale=1"><meta name=author content="Julien Leroy"><meta name=description content="Gérer un fichier csv de 5Go avec ripgrep et xsv - La ligne de commande est toujours pertinent pour la data"><link rel=stylesheet href=https://leroyj.github.io/css/main.min.977e08cd600c7ab7518ca2f112b700c4494f2ce53dac7205e920d78dda1844ad.css><script async src="https://www.googletagmanager.com/gtag/js?id=G-4K18JZ28X6"></script><script>var dnt,doNotTrack=!1;if(!0&&(dnt=navigator.doNotTrack||window.doNotTrack||navigator.msDoNotTrack,doNotTrack=dnt=="1"||dnt=="yes"),!doNotTrack){window.dataLayer=window.dataLayer||[];function gtag(){dataLayer.push(arguments)}gtag("js",new Date),gtag("config","G-4K18JZ28X6")}</script><meta name=twitter:card content="summary"><meta name=twitter:title content="📊 Essayez de faire ça avec Excel :)"><meta name=twitter:description content="Gérer un fichier csv de 5Go avec ripgrep et xsv - La ligne de commande est toujours pertinent pour la data"><meta property="og:url" content="https://leroyj.github.io/fr/posts/xsv/"><meta property="og:site_name" content="Mon Blog Tech (FR)"><meta property="og:title" content="📊 Essayez de faire ça avec Excel :)"><meta property="og:description" content="Gérer un fichier csv de 5Go avec ripgrep et xsv - La ligne de commande est toujours pertinent pour la data"><meta property="og:locale" content="fr"><meta property="og:type" content="article"><meta property="article:section" content="posts"><meta property="article:published_time" content="2022-02-02T21:59:43+00:00"><meta property="article:modified_time" content="2022-02-03T18:43:15+00:00"><meta property="article:tag" content="FR"><meta property="article:tag" content="Howto"></head><body><header class=app-header><a href=https://leroyj.github.io/><img class=app-header-avatar src=/avatar.jpg alt="Julien Leroy"></a><h2>Mon Blog Tech (FR)</h2><nav class=app-header-menu><a class=app-header-menu-item href=/fr>Accueil</a>
 -
 <a class=app-header-menu-item href=/fr/tags/>Libellés</a>
 -
 <a class=app-header-menu-item href=/fr/about>About</a>
-</nav>
-<p>Je suis un dino tech et ceci est mon histoire</p>
-<div class=app-header-social>
-<a href=https://twitter.com/leroyj target=_blank rel="noreferrer noopener"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentcolor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="icon icon-twitter"><title>My Twitter</title><path d="M23 3a10.9 10.9.0 01-3.14 1.53 4.48 4.48.0 00-7.86 3v1A10.66 10.66.0 013 4s-4 9 5 13a11.64 11.64.0 01-7 2c9 5 20 0 20-11.5a4.5 4.5.0 00-.08-.83A7.72 7.72.0 0023 3z"/></svg>
-</a>
-<a href=https://github.com/leroyj target=_blank rel="noreferrer noopener"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentcolor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="icon icon-github"><title>My Github</title><path d="M9 19c-5 1.5-5-2.5-7-3m14 6v-3.87a3.37 3.37.0 00-.94-2.61c3.14-.35 6.44-1.54 6.44-7A5.44 5.44.0 0020 4.77 5.07 5.07.0 0019.91 1S18.73.65 16 2.48a13.38 13.38.0 00-7 0C6.27.65 5.09 1 5.09 1A5.07 5.07.0 005 4.77 5.44 5.44.0 003.5 8.55c0 5.42 3.3 6.61 6.44 7A3.37 3.37.0 009 18.13V22"/></svg>
-</a>
-</div>
-<ul>
-<li class=posts-list-item><a href=https://leroyj.github.io/fr/>French</a></li>
-<li class=posts-list-item><a href=https://leroyj.github.io/en/>English</a></li>
-</ul>
-</header>
-<main class=app-container>
-<article class=post>
-<header class=post-header>
-<h1 class=post-title>📊 Essayez de faire ça avec Excel :)</h1>
-<div class=post-meta>
-<div><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentcolor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="icon icon-calendar"><title>calendar</title><rect x="3" y="4" width="18" height="18" rx="2" ry="2"/><line x1="16" y1="2" x2="16" y2="6"/><line x1="8" y1="2" x2="8" y2="6"/><line x1="3" y1="10" x2="21" y2="10"/></svg>
-Feb 2, 2022
-</div>
-<div><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentcolor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="icon icon-clock"><title>clock</title><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg>
-3 min read
-</div>
-<div><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentcolor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="icon icon-tag"><title>tag</title><path d="M20.59 13.41l-7.17 7.17a2 2 0 01-2.83.0L2 12V2h10l8.59 8.59a2 2 0 010 2.82z"/><line x1="7" y1="7" x2="7.01" y2="7"/></svg>
+-
+<a class=app-header-menu-item href=synmap/index.html>SYN Map</a></nav><p>I am a tech dino and this is my story</p><div class=app-header-social><a href=https://twitter.com/leroyj target=_blank rel="noreferrer noopener"><svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="icon icon-twitter"><title>My Twitter</title><path d="M23 3a10.9 10.9.0 01-3.14 1.53 4.48 4.48.0 00-7.86 3v1A10.66 10.66.0 013 4s-4 9 5 13a11.64 11.64.0 01-7 2c9 5 20 0 20-11.5a4.5 4.5.0 00-.08-.83A7.72 7.72.0 0023 3z"/></svg>
+</a><a href=https://github.com/leroyj target=_blank rel="noreferrer noopener"><svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="icon icon-github"><title>My Github</title><path d="M9 19c-5 1.5-5-2.5-7-3m14 6v-3.87a3.37 3.37.0 00-.94-2.61c3.14-.35 6.44-1.54 6.44-7A5.44 5.44.0 0020 4.77 5.07 5.07.0 0019.91 1S18.73.65 16 2.48a13.38 13.38.0 00-7 0C6.27.65 5.09 1 5.09 1A5.07 5.07.0 005 4.77 5.44 5.44.0 003.5 8.55c0 5.42 3.3 6.61 6.44 7A3.37 3.37.0 009 18.13V22"/></svg></a></div><ul><li class=posts-list-item><a href=https://leroyj.github.io/fr/>French</a></li><li class=posts-list-item><a href=https://leroyj.github.io/en/>English</a></li></ul></header><main class=app-container><article class=post><header class=post-header><h1 class=post-title>📊 Essayez de faire ça avec Excel :)</h1><div class=post-meta><div><svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="icon icon-calendar"><title>calendar</title><rect x="3" y="4" width="18" height="18" rx="2" ry="2"/><line x1="16" y1="2" x2="16" y2="6"/><line x1="8" y1="2" x2="8" y2="6"/><line x1="3" y1="10" x2="21" y2="10"/></svg>
+Feb 2, 2022</div><div><svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="icon icon-clock"><title>clock</title><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg>
+3 min read</div><div><svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="icon icon-tag"><title>tag</title><path d="M20.59 13.41l-7.17 7.17a2 2 0 01-2.83.0L2 12V2h10l8.59 8.59a2 2 0 010 2.82z"/><line x1="7" y1="7" x2="7.01" y2="7"/></svg>
 <a class=tag href=https://leroyj.github.io/fr/tags/fr/>FR</a>
-<a class=tag href=https://leroyj.github.io/fr/tags/howto/>Howto</a>
-</div>
-</div>
-</header>
-<div class=post-content>
-<p><em>Comment gérer un fichier csv de 5Go pour extraire quelques informations simples ?
-La CLI va vous sauver le coup.</em></p>
-<p><img src=/file-not-loaded-completely.png alt=Ouch!></p>
-<h2 id=oui-la-ligne-de-commande-est-toujours-en-vie>Oui, la ligne de commande est toujours en vie</h2>
-<p>Non seulement la ligne de commande (CLI) représente toujours quelque chose aujourd&rsquo;hui pour la partie Ops mais on peut même observer une certaine renaissance.</p>
-<h3 id=automatisation>Automatisation</h3>
-<p>Les activités de DevOps et de déploiement continue encouragent un déploiement très fréquent (plusieurs fois par jour) par les développeurs . Cela n&rsquo;est possible qu&rsquo;avec une automatisation complète de toute la chaîne de déploiement. Cette automatisation doublée d&rsquo;un haut niveau de personnalisation est rendu possible par des scripts et un outillage performant.</p>
-<p>Et qui dit script, dit CLI&mldr;</p>
-<h4 id=rust->Rust 🦀</h4>
-<p><img src=https://upload.wikimedia.org/wikipedia/commons/thumb/d/d5/Rust_programming_language_black_logo.svg/144px-Rust_programming_language_black_logo.svg.png alt=rust></p>
-<p>Rust devient de plus en plus populaire pour les fonctions système en ce moment.
+<a class=tag href=https://leroyj.github.io/fr/tags/howto/>Howto</a></div></div></header><div class=post-content><p><em>Comment gérer un fichier csv de 5Go pour extraire quelques informations simples ?
+La CLI va vous sauver le coup.</em></p><p><img src=/file-not-loaded-completely.png alt=Ouch!></p><h2 id=oui-la-ligne-de-commande-est-toujours-en-vie>Oui, la ligne de commande est toujours en vie</h2><p>Non seulement la ligne de commande (CLI) représente toujours quelque chose aujourd&rsquo;hui pour la partie Ops mais on peut même observer une certaine renaissance.</p><h3 id=automatisation>Automatisation</h3><p>Les activités de DevOps et de déploiement continue encouragent un déploiement très fréquent (plusieurs fois par jour) par les développeurs . Cela n&rsquo;est possible qu&rsquo;avec une automatisation complète de toute la chaîne de déploiement. Cette automatisation doublée d&rsquo;un haut niveau de personnalisation est rendu possible par des scripts et un outillage performant.</p><p>Et qui dit script, dit CLI&mldr;</p><h4 id=rust->Rust 🦀</h4><p><img src=https://upload.wikimedia.org/wikipedia/commons/thumb/d/d5/Rust_programming_language_black_logo.svg/144px-Rust_programming_language_black_logo.svg.png alt=rust></p><p>Rust devient de plus en plus populaire pour les fonctions système en ce moment.
 Ce succès s&rsquo;explique principalement en raison de la modernité de ce langage de programmation système offrant un haut niveau de sécurité <strong><em>et</em></strong> de performance.
-Avec ce succès grandissant, on voit émerger de plus en plus de réécriture d&rsquo;outil classique en ligne de commande.</p>
-<p>Et cela va bien plus loin que qu&rsquo;une simple réécriture.</p>
-<h3 id=des-outils-sous-stéroïdes>Des outils sous stéroïdes</h3>
-<p><a href=https://github.com/BurntSushi/ripgrep><code>ripgrep</code></a> (aka <code>rg</code>) est un des exemples de réécriture les plus célèbres. Il s&rsquo;agit d&rsquo;une réimplémentation plus rapide que l&rsquo;éclair du non moins célèbre <code>grep</code>, un outil de recherche de motif de phrases dans des fichiers.
-Ses performances incroyables en font un outil de choix pour être intégré dans des projets majeurs tels que Microsoft Visual Studio Code.</p>
-<p>Essayez ces autres outils:</p>
-<ul>
-<li><code>exa</code> en remplacement de <code>ls</code></li>
-<li><code>fd</code> en remplacement de <code>find</code></li>
-<li><code>dust</code> en remplacement de <code>du</code></li>
-</ul>
-<h2 id=cest-bien-tout-ça-mais-pourquoi-my-interesser>C&rsquo;est bien tout ça, mais pourquoi m&rsquo;y interesser?</h2>
-<h3 id=mon-cas-dusage>Mon cas d&rsquo;usage</h3>
-<p>Pour certaines raisons, J&rsquo;ai eu à trouver l&rsquo;établissement d&rsquo;un certaine entreprise dans une certaine ville. Bien entendu, il existe quelques services en ligne qui procurent ce type de fonctionnalité.
-Toutefois, la compagnie en question (Orange) a plus de 4000 établissements et les services en ligne n&rsquo;offrent pas la possibilité de filtrer par ville, ni exclure les établissements fermés.</p>
-<h3 id=open-data>Open Data</h3>
-<p>Grâce à la communauté militant pour l&rsquo;ouverture des données (mouvement Open Data), La plupart des administrations ouvrent désormais leur données publiques.
+Avec ce succès grandissant, on voit émerger de plus en plus de réécriture d&rsquo;outil classique en ligne de commande.</p><p>Et cela va bien plus loin que qu&rsquo;une simple réécriture.</p><h3 id=des-outils-sous-stéroïdes>Des outils sous stéroïdes</h3><p><a href=https://github.com/BurntSushi/ripgrep><code>ripgrep</code></a> (aka <code>rg</code>) est un des exemples de réécriture les plus célèbres. Il s&rsquo;agit d&rsquo;une réimplémentation plus rapide que l&rsquo;éclair du non moins célèbre <code>grep</code>, un outil de recherche de motif de phrases dans des fichiers.
+Ses performances incroyables en font un outil de choix pour être intégré dans des projets majeurs tels que Microsoft Visual Studio Code.</p><p>Essayez ces autres outils:</p><ul><li><code>exa</code> en remplacement de <code>ls</code></li><li><code>fd</code> en remplacement de <code>find</code></li><li><code>dust</code> en remplacement de <code>du</code></li></ul><h2 id=cest-bien-tout-ça-mais-pourquoi-my-interesser>C&rsquo;est bien tout ça, mais pourquoi m&rsquo;y interesser?</h2><h3 id=mon-cas-dusage>Mon cas d&rsquo;usage</h3><p>Pour certaines raisons, J&rsquo;ai eu à trouver l&rsquo;établissement d&rsquo;un certaine entreprise dans une certaine ville. Bien entendu, il existe quelques services en ligne qui procurent ce type de fonctionnalité.
+Toutefois, la compagnie en question (Orange) a plus de 4000 établissements et les services en ligne n&rsquo;offrent pas la possibilité de filtrer par ville, ni exclure les établissements fermés.</p><h3 id=open-data>Open Data</h3><p>Grâce à la communauté militant pour l&rsquo;ouverture des données (mouvement Open Data), La plupart des administrations ouvrent désormais leur données publiques.
 Il y a même un site officiel recensant les entreprises françaises appelé <a href=https://annuaire-entreprises.data.gouv.fr/>Annuaire Entreprise</a>.
 Malheureusement, encore une fois, cet annuaire en ligne ne permet pas de filtrer les établissements de cette liste et pas moyen de l&rsquo;extraire.
 Alors, allons à la source des données sur la plateforme <a href=https://www.data.gouv.fr/en/>data.gouv.fr</a>.
-Vous pouvez trouver facilement la base des entreprise française appelée <a href=https://www.data.gouv.fr/fr/datasets/base-sirene-des-entreprises-et-de-leurs-etablissements-siren-siret/>Sirene</a>.</p>
-<p>Seulement voilà, un fois récupéré et décompressé, le fichier fait tout de même 5,4 Giga octets !</p>
-<h3 id=now-what-to-do-of-a-53gb-csv-file>Now, what to do of a 5,3GB csv file?</h3>
-<p>Ripgrep aka <code>rg</code> est là pour vous aider à cibler votre donnée.
-Une fois fait, c&rsquo;est un jeu d&rsquo;enfant d&rsquo;extraire proprement les données utile en utilisant xsv.</p>
-<p>Voici comment :</p>
-<div class=highlight><pre tabindex=0 style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-bash data-lang=bash><span style=color:#75715e># Get the French company file from the open data platform</span>
-curl -LO https://www.data.gouv.fr/fr/datasets/r/0651fb76-bcf3-4f6a-a38d-bc04fa708576
-<span style=color:#75715e># unzip the 1.38GB file to a 5.3GB csv file</span>
-<span style=color:#75715e># Search for Orange (unique id 380129866) and extract the Orange&#39;s offices in the city of Guyancourt (Postal Code 78280) that are still active</span>
-time <span style=color:#f92672>(</span><span style=color:#ae81ff>\
-</span><span style=color:#ae81ff></span>xsv search -s siren <span style=color:#e6db74>&#39;380129866&#39;</span> StockEtablissement_utf8.csv <span style=color:#ae81ff>\
-</span><span style=color:#ae81ff></span>| xsv search -s codePostalEtablissement <span style=color:#e6db74>&#39;78280&#39;</span> <span style=color:#ae81ff>\
-</span><span style=color:#ae81ff></span>| xsv search -s etatAdministratifEtablissement <span style=color:#e6db74>&#39;A&#39;</span> <span style=color:#ae81ff>\
-</span><span style=color:#ae81ff></span>| xsv <span style=color:#66d9ef>select</span> siren,siret,enseigne1Etablissement,typeVoieEtablissement,libelleVoieEtablissement,libelleCommuneEtablissement <span style=color:#ae81ff>\
-</span><span style=color:#ae81ff></span>| xsv table <span style=color:#f92672>)</span>
-</code></pre></div><p>
-<asciinema-player src=/cast/466256.cast cols=640 rows=29 preload=1 start-at=0 speed=2 idle-time-limit=0.5 poster=#ZgotmplZ font-size=small></asciinema-player>
-</p>
-<p>La ligne de commande reste toujours pertinente pour gérer les données.
-Essayez de faire ça avec votre outil favori en interface graphique :P</p>
-</div>
-<div class=post-footer>
-<h4></h4>
-<ul>
-<li>
-<a href=https://leroyj.github.io/en/posts/xsv/>en: 📊 Try to do this with Excel :) ()</a>
-</li>
-</ul>
-</div>
-</article>
-</main>
-<script src=https://leroyj.github.io/script/asciinema-player.js></script>
-</body>
-</html>
+Vous pouvez trouver facilement la base des entreprise française appelée <a href=https://www.data.gouv.fr/fr/datasets/base-sirene-des-entreprises-et-de-leurs-etablissements-siren-siret/>Sirene</a>.</p><p>Seulement voilà, un fois récupéré et décompressé, le fichier fait tout de même 5,4 Giga octets !</p><h3 id=now-what-to-do-of-a-53gb-csv-file>Now, what to do of a 5,3GB csv file?</h3><p>Ripgrep aka <code>rg</code> est là pour vous aider à cibler votre donnée.
+Une fois fait, c&rsquo;est un jeu d&rsquo;enfant d&rsquo;extraire proprement les données utile en utilisant xsv.</p><p>Voici comment :</p><div class=highlight><pre tabindex=0 style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-bash data-lang=bash><span style=display:flex><span><span style=color:#75715e># Get the French company file from the open data platform</span>
+</span></span><span style=display:flex><span>curl -LO https://www.data.gouv.fr/fr/datasets/r/0651fb76-bcf3-4f6a-a38d-bc04fa708576
+</span></span><span style=display:flex><span><span style=color:#75715e># unzip the 1.38GB file to a 5.3GB csv file</span>
+</span></span><span style=display:flex><span><span style=color:#75715e># Search for Orange (unique id 380129866) and extract the Orange&#39;s offices in the city of Guyancourt (Postal Code 78280) that are still active</span>
+</span></span><span style=display:flex><span>time <span style=color:#f92672>(</span><span style=color:#ae81ff>\
+</span></span></span><span style=display:flex><span><span style=color:#ae81ff></span>xsv search -s siren <span style=color:#e6db74>&#39;380129866&#39;</span> StockEtablissement_utf8.csv <span style=color:#ae81ff>\
+</span></span></span><span style=display:flex><span><span style=color:#ae81ff></span>| xsv search -s codePostalEtablissement <span style=color:#e6db74>&#39;78280&#39;</span> <span style=color:#ae81ff>\
+</span></span></span><span style=display:flex><span><span style=color:#ae81ff></span>| xsv search -s etatAdministratifEtablissement <span style=color:#e6db74>&#39;A&#39;</span> <span style=color:#ae81ff>\
+</span></span></span><span style=display:flex><span><span style=color:#ae81ff></span>| xsv <span style=color:#66d9ef>select</span> siren,siret,enseigne1Etablissement,typeVoieEtablissement,libelleVoieEtablissement,libelleCommuneEtablissement <span style=color:#ae81ff>\
+</span></span></span><span style=display:flex><span><span style=color:#ae81ff></span>| xsv table <span style=color:#f92672>)</span>
+</span></span></code></pre></div><p><asciinema-player src=/cast/466256.cast cols=640 rows=29 preload=1 start-at=0 speed=2 idle-time-limit=0.5 poster=#ZgotmplZ font-size=small></asciinema-player></p><p>La ligne de commande reste toujours pertinente pour gérer les données.
+Essayez de faire ça avec votre outil favori en interface graphique :P</p></div><div class=post-footer><h4></h4><ul><li><a href=https://leroyj.github.io/en/posts/xsv/>en: 📊 Try to do this with Excel :) ()</a></li></ul></div></article></main><script src=https://leroyj.github.io/script/asciinema-player.js></script></body></html>

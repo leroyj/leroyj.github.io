@@ -1,0 +1,162 @@
+{
+    "mapCenter": [48.763, 1.837],
+    "mapZoom": 10,
+    "customIconByType": {
+        "YVELINES NUMERIQUES": {
+            "glyphColor": "lightcyan",
+            "glyphSize": "20px",
+            "prefix": "mdi",
+            "glyph": "chair-school"
+        },
+        "SYN": {
+            "glyphColor": "lightcyan",
+            "glyphSize": "20px",
+            "prefix": "mdi",
+            "glyph": "chair-school"
+        },
+        "CDSI": {
+            "glyphColor": "lightcyan",
+            "glyphSize": "20px",
+            "prefix": "mdi",
+            "glyph": "cctv"
+        },
+        "BACKBONE": {
+            "glyphColor": "lightcyan",
+            "glyphSize": "20px",
+            "prefix": "mdi",
+            "glyph": "ip-network"
+        },
+        "COL_78": {
+            "glyphColor": "lavender",
+            "glyphSize": "20px",
+            "prefix": "mdi",
+            "glyph": "school"
+        },
+        "LYC_78": {
+            "glyphColor": "lavender",
+            "glyphSize": "20px",
+            "prefix": "mdi",
+            "glyph": "school-outline"
+        },
+        "ROYAL": {
+            "glyphColor": "gold",
+            "glyphSize": "20px",
+            "prefix": "mdi",
+            "glyph": "crown"
+        },
+        "DPT_78": {
+            "glyphColor": "mistyrose",
+            "glyphSize": "20px",
+            "prefix": "",
+            "cssClass":"serif",
+            "className":"serif",
+            "glyph": "y'"
+        },
+        "SDIS": {
+            "glyphColor": "tomato",
+            "glyphSize": "20px",
+            "prefix": "mdi",
+            "glyph": "fire"
+        },
+        "INTERCO": {
+            "glyphColor": "light-purple",
+            "glyphSize": "20px",
+            "prefix": "mdi",
+            "glyph": "city-variant"
+        },
+        "VILLE": {
+            "glyphColor": "purple",
+            "glyphSize": "20px",
+            "prefix": "mdi",
+            "glyph": "city"
+        },
+        "INRA": {
+            "glyphColor": "limegreen",
+            "glyphSize": "20px",
+            "prefix": "mdi",
+            "glyph": "flower"
+        },
+        "PREFECTURE": {
+            "glyphColor": "blue",
+            "glyphSize": "20px",
+            "prefix": "mdi",
+            "glyph": "flag"
+        },
+        "GENDARMERIE": {
+            "glyphColor": "blue",
+            "glyphSize": "20px",
+            "prefix": "mdi",
+            "glyph": "security"
+        },
+        "PN": {
+            "glyphColor": "blue",
+            "glyphSize": "20px",
+            "prefix": "mdi",
+            "glyph": "shield"
+        },
+        "SITER": {
+            "glyphColor": "maroon",
+            "glyphSize": "20px",
+            "prefix": "mdi",
+            "glyph": "traffic-light"
+        },
+        "AUTRE": {
+            "glyphColor": "black",
+            "glyphSize": "20px",
+            "prefix": "mdi",
+            "glyph": "checkbox-blank-circle-outline"
+        },
+        "null": {
+            "glyphColor": "black",
+            "glyphSize": "20px",
+            "prefix": "mdi",
+            "glyph": "comment-question-outline"
+        }
+    },
+    "synLayers": [
+        {
+            "layerName": "Armoire de rue",
+            "layerType": "net",
+            "geoJsonFile": "yen_adr.json",
+            "customIcon": {
+                "glyphColor": "lightcyan",
+                "glyphSize": "20px",
+                "prefix": "mdi",
+                "glyph": "network-outline"
+            }
+        },
+        {
+            "layerName": "Shelter",
+            "layerType": "net",
+            "geoJsonFile": "yen_shelter.json",
+            "customIcon": {
+                "glyphColor": "lightcyan",
+                "glyphSize": "20px",
+                "prefix": "mdi",
+                "glyph": "upload-network"
+            }
+        },
+        {
+            "layerName": "Datacenter",
+            "layerType": "net",
+            "geoJsonFile": "yen_datacenter.json",
+            "customIcon": {
+                "glyphColor": "lightcyan",
+                "glyphSize": "20px",
+                "prefix": "mdi",
+                "glyph": "server-network"
+            }
+        },
+        {
+            "layerName": "Client",
+            "layerType": "site",
+            "geoJsonFile": "yen_sites.json",
+            "customIcon": {
+                "glyphColor": "red",
+                "glyphSize": "20px",
+                "prefix": "mdi",
+                "glyph": "fire"
+            }
+        }
+    ]
+}

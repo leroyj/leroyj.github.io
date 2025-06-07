@@ -1,0 +1,7 @@
+#map { height: 180px; }
+
+.serif {
+    font-weight: bold;
+    font-style: italic;
+    font-family: "Serif";
+}
